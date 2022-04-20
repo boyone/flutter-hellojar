@@ -158,3 +158,50 @@
       return greeting.message()
    }
    ```
+
+5. Invoke Method with arguments
+
+   - Copy ext-libs/greeting-1.1-SNAPSHOT.jar to android/app/libs
+
+   ```sh
+   cp ext-libs/greeting-1.0-SNAPSHOT.jar android/app/libs
+   ```
+
+   - Change dependencies in android/app/build.gradle to `greeting-1.1-SNAPSHOT.jar`
+
+   ```gradle
+   dependencies {
+       ...
+       implementation(files('libs/greeting-1.1-SNAPSHOT.jar'))
+   }
+   ```
+
+   - Pass arguments via invokeMethod (main.dart)
+
+   ```dart
+   try {
+     final String result = await platform.invokeMethod('greeting', 'World');
+     message = result;
+   } on PlatformException catch (e) {
+     message = "Failed to get greeting message: '${e.message}'.";
+   }
+   ```
+
+   - Extract parameter by `call.arguments()` and pass to greeting method (MainActivity.kt)
+
+   ```kotlin
+   setMethodCallHandler {
+      call, result ->
+      if (call.method == "greeting") {
+        var word = call.arguments() as String
+        val message = greeting(word)
+        if (message != null) {
+          result.success(message)
+        } else {
+          result.error("NOT FOUND", "Greeting message not found.", null)
+        }
+      } else {
+          result.notImplemented()
+      }
+   }
+   ```

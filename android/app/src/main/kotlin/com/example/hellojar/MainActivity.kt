@@ -17,7 +17,8 @@ class MainActivity: FlutterActivity() {
     MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
       call, result ->
       if (call.method == "greeting") {
-        val message = greeting()
+        var word = call.arguments() as String
+        val message = greeting(word)
 
         if (message != null) {
           result.success(message)
@@ -30,9 +31,9 @@ class MainActivity: FlutterActivity() {
     }
   }
 
-  private fun greeting(): String {
+  private fun greeting(word: String): String {
       var greeting = Greeting()
-      return greeting.message()
+      return greeting.message(word)
   }
 }
 

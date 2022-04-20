@@ -65,5 +65,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation(files('libs/greeting-1.0-SNAPSHOT.jar'))
+    implementation(files('libs/greeting-1.1-SNAPSHOT.jar'))
 }

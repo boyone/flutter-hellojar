@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _greeting() async {
     String message;
     try {
-      final String result = await platform.invokeMethod('greeting');
+      final String result = await platform.invokeMethod('greeting', "World");
       message = result;
     } on PlatformException catch (e) {
       message = "Failed to get greeting message: '${e.message}'.";
